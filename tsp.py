@@ -56,7 +56,6 @@ class Work():
                     max_val = val
                     max_node = node
         else:
-            # Bob was here
             print "Exploration"
             sum = 0
             node = -1
