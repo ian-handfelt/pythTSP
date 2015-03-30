@@ -275,7 +275,7 @@ def main(argv):
             city_vec.append(cities[node])
         print "\nBest path cost = %s\n" % (bpc,)
         results = [bpv, city_vec, bpc]
-        pickle.dump(results, open('output.pickled', 'w+')) #argv[2]
+        pickle.dump(results, open('output.pickled', 'w+')) #replace argv[2]
     except Exception, e:
         print "exception: " + str(e)
         traceback.print_exc()
