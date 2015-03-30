@@ -75,9 +75,3 @@ class BigGroup:
                     evaporation = (1 - self.Alpha) * self.graph.tau(r, s)
                     deposition = self.Alpha * delt_tau
                     self.graph.update_tau(r, s, evaporation + deposition)
-
-
-import pickle
-import sys
-import traceback
-
