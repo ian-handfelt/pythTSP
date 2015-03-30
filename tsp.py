@@ -1,7 +1,8 @@
 import pickle
 import sys
 import traceback
-
+from network import Graph
+from antcolonies import AntColony
 
 def main(argv):
     nm = 10
@@ -18,7 +19,7 @@ def main(argv):
         ni = 20
         nr = 1
 
-    stuff = pickle.load(open(argv[1], "r"))
+    stuff = pickle.load(open('citiesAndDistances.pickled', "r")) #argv[1]
     cities = stuff[0]
     cm = stuff[1]
     # why are we doing this?
@@ -30,13 +31,13 @@ def main(argv):
 
 
     try:
-        graph = GraphBit(nm, cm)
+        graph = Graph(nm, cm)
         bpv = None
         bpc = sys.maxint
         for i in range(0, nr):
             print "Repetition %s" % i
             graph.reset_tau()
-            workers = BigGroup(graph, na, ni)
+            workers = AntColony(graph, na, ni)
             print "Colony Started"
             workers.start()
             if workers.bpc < bpc:
@@ -54,7 +55,7 @@ def main(argv):
             city_vec.append(cities[node])
         print "\nBest path cost = %s\n" % (bpc,)
         results = [bpv, city_vec, bpc]
-        pickle.dump(results, open(argv[2], 'w+'))
+        pickle.dump(results, open('output.pickled', 'w+')) #argv[2]
     except Exception, e:
         print "exception: " + str(e)
         traceback.print_exc()

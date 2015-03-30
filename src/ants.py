@@ -1,7 +1,7 @@
 import math
 import random
 
-class Work():
+class Ant():
     def __init__(self, ID, start_node, colony):
         self.ID = ID
         self.start_node = start_node

@@ -1,7 +1,8 @@
 import random
 import sys
+from ants import Ant
 
-class BigGroup:
+class AntColony:
     def __init__(self, graph, num_ants, num_iterations):
         self.graph = graph
         self.num_ants = num_ants
@@ -62,7 +63,7 @@ class BigGroup:
         self.reset()
         ants = []
         for i in range(0, self.num_ants):
-            ant = Work(i, random.randint(0, self.graph.num_nodes - 1), self)
+            ant = Ant(i, random.randint(0, self.graph.num_nodes - 1), self)
             ants.append(ant)
 
         return ants
