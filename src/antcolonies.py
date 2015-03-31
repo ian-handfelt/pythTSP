@@ -43,7 +43,6 @@ class AntColony:
         return self.iter_counter
 
     def update(self, ant):
-        #print "Update called by %s" % (ant.ID,)
         self.ant_counter += 1
         self.avg_path_cost += ant.path_cost
         if ant.path_cost < self.LowerBoundCost:
@@ -72,7 +71,9 @@ class AntColony:
         return ants
  
     def global_updating_rule(self):
-        # can someone explain this
+        #updates the desirability of nodes for future colonies of ants when building each ant's path.
+        #evaporation is the fixed rate of reduction to the pheromone where the pheromone is one of two components every time an ant must choose the next node in its path
+        #deposition is a function of the ant's completed path total cost and the number of ants who chose that path
         evaporation = 0
         deposition = 0
         for r in range(0, self.graph.numNodes):

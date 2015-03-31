@@ -31,10 +31,8 @@ class Graph:
             for s in range(0, self.numNodes):
                 self.tau_mat[r][s] = self.tau0
 
-
     def average_delta(self):
         return self.average(self.delta_mat)
-
 
     def average_tau(self):
         return self.average(self.tau_mat)

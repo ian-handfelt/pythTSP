@@ -22,7 +22,6 @@ class Ant():
         for i in range(0, self.graph.numNodes):
             self.path_mat.append([0] * self.graph.numNodes)
 
-    # could this be simpler?
     def run(self):
         graph = self.grouping.graph
         while not self.end():
