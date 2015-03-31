@@ -5,56 +5,56 @@ from network import Graph
 from antcolonies import AntColony
 
 def main(argv):
-    nm = 10
+    numNodes = 10
 
     if len(argv) >= 3 and argv[0]:
-        nm = int(argv[0])
+        numNodes = int(argv[0])
 
-    if nm <= 10:
-        na = 20
-        ni = 12
-        nr = 1
+    if numNodes <= 10:
+        numAnts = 20
+        numIters = 12
+        numReps = 1
     else:
-        na = 28
-        ni = 20
-        nr = 1
+        numAnts = 28
+        numIters = 20
+        numReps = 1
 
-    stuff = pickle.load(open('citiesAndDistances.pickled', "r")) #argv[1]
-    cities = stuff[0]
-    cm = stuff[1]
+    tempNetworkInput = pickle.load(open('citiesAndDistances.pickled', "r")) #argv[1]
+    Nodes = tempNetworkInput[0]
+    ArcCosts = tempNetworkInput[1]
     # why are we doing this?
-    if nm < len(cm):
-        cm = cm[0:nm]
-        for i in range(0, nm):
-            cm[i] = cm[i][0:nm]
+    if numNodes < len(ArcCosts):
+        ArcCosts = ArcCosts[0:numNodes]
+        for i in range(0, numNodes):
+            ArcCosts[i] = ArcCosts[i][0:numNodes]
 
 
 
     try:
-        graph = Graph(nm, cm)
-        bpv = None
-        bpc = sys.maxint
-        for i in range(0, nr):
+        graph = Graph(numNodes, ArcCosts)
+        LowerBoundPath = None
+        LowerBoundCost = sys.maxint
+        for i in range(0, numReps):
             print "Repetition %s" % i
             graph.reset_tau()
-            workers = AntColony(graph, na, ni)
+            antcolony = AntColony(graph, numAnts, numIters)
             print "Colony Started"
-            workers.start()
-            if workers.bpc < bpc:
+            antcolony.start()
+            if antcolony.LowerBoundCost < LowerBoundCost:
                 print "Colony Path"
-                bpv = workers.bpv
-                bpc = workers.bpc
+                LowerBoundPath = antcolony.LowerBoundPath
+                LowerBoundCost = antcolony.LowerBoundCost
 
         print "\n------------------------------------------------------------"
         print "                     Results                                "
         print "------------------------------------------------------------"
-        print "\nBest path = %s" % (bpv,)
-        city_vec = []
-        for node in bpv:
-            print cities[node] + " ",
-            city_vec.append(cities[node])
-        print "\nBest path cost = %s\n" % (bpc,)
-        results = [bpv, city_vec, bpc]
+        print "\nBest path = %s" % (LowerBoundPath,)
+        OptimalPath = []
+        for node in LowerBoundPath:
+            print Nodes[node] + " ",
+            OptimalPath.append(Nodes[node])
+        print "\nBest path cost = %s\n" % (LowerBoundCost,)
+        results = [LowerBoundPath, OptimalPath, LowerBoundCost]
         pickle.dump(results, open('output.pickled', 'w+')) #argv[2]
     except Exception, e:
         print "exception: " + str(e)

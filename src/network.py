@@ -1,14 +1,14 @@
 class Graph:
-    def __init__(self, num_nodes, delta_mat, tau_mat=None):
+    def __init__(self, numNodes, delta_mat, tau_mat=None):
         print len(delta_mat)
-        if len(delta_mat) != num_nodes:
-            raise Exception("len(delta) != num_nodes")
-        self.num_nodes = num_nodes
+        if len(delta_mat) != numNodes:
+            raise Exception("len(delta) != numNodes")
+        self.numNodes = numNodes
         self.delta_mat = delta_mat 
         if tau_mat is None:
             self.tau_mat = []
-            for i in range(0, num_nodes):
-                self.tau_mat.append([0] * num_nodes)
+            for i in range(0, numNodes):
+                self.tau_mat.append([0] * numNodes)
 
     def delta(self, r, s):
         return self.delta_mat[r][s]
@@ -24,11 +24,11 @@ class Graph:
 
     def reset_tau(self):
         avg = self.average_delta()
-        self.tau0 = 1.0 / (self.num_nodes * 0.5 * avg)
+        self.tau0 = 1.0 / (self.numNodes * 0.5 * avg)
         print "Average = %s" % (avg,)
         print "Tau0 = %s" % (self.tau0)
-        for r in range(0, self.num_nodes):
-            for s in range(0, self.num_nodes):
+        for r in range(0, self.numNodes):
+            for s in range(0, self.numNodes):
                 self.tau_mat[r][s] = self.tau0
 
 
@@ -41,9 +41,9 @@ class Graph:
 
     def average(self, matrix):
         sum = 0
-        for r in range(0, self.num_nodes):
-            for s in range(0, self.num_nodes):
+        for r in range(0, self.numNodes):
+            for s in range(0, self.numNodes):
                 sum += matrix[r][s]
 
-        avg = sum / (self.num_nodes * self.num_nodes)
+        avg = sum / (self.numNodes * self.numNodes)
         return avg

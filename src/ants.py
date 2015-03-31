@@ -14,13 +14,13 @@ class Ant():
         self.Beta = 1.0
         self.Q0 = 0.5
         self.Rho = 0.99
-        self.ntv = {}
-        for i in range(0, self.graph.num_nodes):
+        self.UnexploredNodes = {}
+        for i in range(0, self.graph.numNodes):
             if i != self.start_node:
-                self.ntv[i] = i
+                self.UnexploredNodes[i] = i
         self.path_mat = []
-        for i in range(0, self.graph.num_nodes):
-            self.path_mat.append([0] * self.graph.num_nodes)
+        for i in range(0, self.graph.numNodes):
+            self.path_mat.append([0] * self.graph.numNodes)
 
     # could this be simpler?
     def run(self):
@@ -37,7 +37,7 @@ class Ant():
         self.__init__(self.ID, self.start_node, self.grouping)
 
     def end(self):
-        return not self.ntv
+        return not self.UnexploredNodes
 
 
     def state_transition_rule(self, curr_node):
@@ -48,7 +48,7 @@ class Ant():
             print "Exploitation"
             max_val = -1
             val = None
-            for node in self.ntv.values():
+            for node in self.UnexploredNodes.values():
                 if graph.tau(curr_node, node) == 0:
                     raise Exception("tau = 0")
                 val = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
@@ -59,15 +59,15 @@ class Ant():
             print "Exploration"
             sum = 0
             node = -1
-            for node in self.ntv.values():
+            for node in self.UnexploredNodes.values():
                 if graph.tau(curr_node, node) == 0:
                     raise Exception("tau = 0")
                 sum += graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
             if sum == 0:
                 raise Exception("sum = 0")
-            avg = sum / len(self.ntv)
+            avg = sum / len(self.UnexploredNodes)
             print "avg = %s" % (avg,)
-            for node in self.ntv.values():
+            for node in self.UnexploredNodes.values():
                 p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
                 if p > avg:
                     print "p = %s" % (p,)
@@ -76,7 +76,7 @@ class Ant():
                 max_node = node
         if max_node < 0:
             raise Exception("max_node < 0")
-        del self.ntv[max_node]
+        del self.UnexploredNodes[max_node]
         return max_node
 
     def local_updating_rule(self, curr_node, next_node):
