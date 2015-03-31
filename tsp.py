@@ -24,7 +24,7 @@ def main(argv):
         numIters = 20
         numReps = 1
 
-    tempNetworkInput = pickle.load(open('citiesAndDistances.pickled', "r")) #argv[1]
+    tempNetworkInput = pickle.load(open('citiesAndDistances.pickled', "r")) # #argv[1]
     Nodes = tempNetworkInput[0]
     ArcCosts = tempNetworkInput[1]
     numNodes = len(ArcCosts)
@@ -33,8 +33,6 @@ def main(argv):
         ArcCosts = ArcCosts[0:numNodes]
         for i in range(0, numNodes):
             ArcCosts[i] = ArcCosts[i][0:numNodes]
-
-
 
     try:
         graph = Graph(numNodes, ArcCosts)
@@ -61,11 +59,10 @@ def main(argv):
             OptimalPath.append(Nodes[node])
         print "\nBest path cost = %s\n" % (LowerBoundCost,)
         results = [LowerBoundPath, OptimalPath, LowerBoundCost]
-        pickle.dump(results, open('output.pickled', 'w+')) #argv[2]
+        pickle.dump(results, open(argv[2], 'w+')) # 'output.pickled'
     except Exception, e:
         print "exception: " + str(e)
         traceback.print_exc()
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])    

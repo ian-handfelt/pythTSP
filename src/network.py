@@ -1,6 +1,6 @@
 class Graph:
     def __init__(self, numNodes, delta_mat, tau_mat=None):
-        print len(delta_mat)
+        #print len(delta_mat)
         if len(delta_mat) != numNodes:
             raise Exception("len(delta) != numNodes")
         self.numNodes = numNodes
@@ -25,7 +25,7 @@ class Graph:
     def reset_tau(self):
         avg = self.average_delta()
         self.tau0 = 1.0 / (self.numNodes * 0.5 * avg)
-        print "Average = %s" % (avg,)
+        #print "Average = %s" % (avg,)
         print "Tau0 = %s" % (self.tau0)
         for r in range(0, self.numNodes):
             for s in range(0, self.numNodes):
