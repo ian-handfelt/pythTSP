@@ -24,11 +24,10 @@ def main(argv):
         numIters = 20
         numReps = 1
 
-    tempNetworkInput = pickle.load(open('citiesAndDistances.pickled', "r")) # #argv[1]
+    tempNetworkInput = pickle.load(open('citiesAndDistances.pickled', "r"))
     Nodes = tempNetworkInput[0]
     ArcCosts = tempNetworkInput[1]
     numNodes = len(ArcCosts)
-    # why are we doing this?
     if numNodes < len(ArcCosts):
         ArcCosts = ArcCosts[0:numNodes]
         for i in range(0, numNodes):
@@ -45,7 +44,6 @@ def main(argv):
             print "Colony Started"
             antcolony.start()
             if antcolony.LowerBoundCost < LowerBoundCost:
-                # print "Colony Path"
                 LowerBoundPath = antcolony.LowerBoundPath
                 LowerBoundCost = antcolony.LowerBoundCost
 
@@ -59,7 +57,6 @@ def main(argv):
             OptimalPath.append(Nodes[node])
         print "\nBest path cost = %s\n" % (LowerBoundCost,)
         results = [LowerBoundPath, OptimalPath, LowerBoundCost]
-        pickle.dump(results, open(argv[2], 'w+')) # 'output.pickled'
     except Exception, e:
         print "exception: " + str(e)
         traceback.print_exc()
