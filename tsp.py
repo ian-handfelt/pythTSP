@@ -1,11 +1,16 @@
 import pickle
 import sys
 import traceback
+import csv
 from network import Graph
 from antcolonies import AntColony
 
 def main(argv):
     numNodes = 10
+    with open('output.csv', 'wb') as f:
+        writer = csv.writer(f)
+        writer.writerow(('Iteration', 'Best Path', 'Minimum Path Cost', 'Average Path Cost'))
+        f.close()
 
     if len(argv) >= 3 and argv[0]:
         numNodes = int(argv[0])
@@ -22,6 +27,7 @@ def main(argv):
     tempNetworkInput = pickle.load(open('citiesAndDistances.pickled', "r")) #argv[1]
     Nodes = tempNetworkInput[0]
     ArcCosts = tempNetworkInput[1]
+    numNodes = len(ArcCosts)
     # why are we doing this?
     if numNodes < len(ArcCosts):
         ArcCosts = ArcCosts[0:numNodes]
@@ -41,7 +47,7 @@ def main(argv):
             print "Colony Started"
             antcolony.start()
             if antcolony.LowerBoundCost < LowerBoundCost:
-                print "Colony Path"
+                # print "Colony Path"
                 LowerBoundPath = antcolony.LowerBoundPath
                 LowerBoundCost = antcolony.LowerBoundCost
 

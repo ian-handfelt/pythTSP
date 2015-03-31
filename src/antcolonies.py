@@ -1,5 +1,6 @@
 import random
 import sys
+import csv
 from ants import Ant
 
 class AntColony:
@@ -42,7 +43,7 @@ class AntColony:
         return self.iter_counter
 
     def update(self, ant):
-        print "Update called by %s" % (ant.ID,)
+        #print "Update called by %s" % (ant.ID,)
         self.ant_counter += 1
         self.avg_path_cost += ant.path_cost
         if ant.path_cost < self.LowerBoundCost:
@@ -54,8 +55,10 @@ class AntColony:
             self.avg_path_cost /= len(self.ants)
             print "Best: %s, %s, %s, %s" % (
                 self.LowerBoundPath, self.LowerBoundCost, self.iter_counter, self.avg_path_cost,)
-
-
+            with open('output.csv', 'ab') as f:
+                writer = csv.writer(f)
+                writer.writerow((self.iter_counter, self.LowerBoundPath, self.LowerBoundCost, self.avg_path_cost))
+        
     def done(self):
         return self.iter_counter == self.numIters
 

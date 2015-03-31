@@ -45,7 +45,7 @@ class Ant():
         q = random.random()
         max_node = -1
         if q < self.Q0:
-            print "Exploitation"
+            #print "Exploitation"
             max_val = -1
             val = None
             for node in self.UnexploredNodes.values():
@@ -56,7 +56,7 @@ class Ant():
                     max_val = val
                     max_node = node
         else:
-            print "Exploration"
+            #print "Exploration"
             sum = 0
             node = -1
             for node in self.UnexploredNodes.values():
@@ -66,11 +66,11 @@ class Ant():
             if sum == 0:
                 raise Exception("sum = 0")
             avg = sum / len(self.UnexploredNodes)
-            print "avg = %s" % (avg,)
+            #print "avg = %s" % (avg,)
             for node in self.UnexploredNodes.values():
                 p = graph.tau(curr_node, node) * math.pow(graph.etha(curr_node, node), self.Beta)
                 if p > avg:
-                    print "p = %s" % (p,)
+                    #print "p = %s" % (p,)
                     max_node = node
             if max_node == -1:
                 max_node = node
